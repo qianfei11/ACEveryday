@@ -10,7 +10,7 @@ int *q = NULL;
 void init(int n)
 {
 	max = n;
-	q = (int *)malloc(n * sizeof(int));
+	q = (int *)malloc(max * sizeof(int));
 }
 
 int full()
@@ -43,7 +43,7 @@ void quit()
 {
 	if(!empty())
 	{
-		printf("%d\n\n", q[head++]);
+		printf("-->%d\n", q[head++]);
 		length--;
 		head %= max;
 	}
