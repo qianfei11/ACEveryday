@@ -24,30 +24,30 @@ ptree create()
 	return root;
 }
 
-void qtravel(ptree root)
+void pretravel(ptree root)
 {
 	if(root == NULL)
 		return;
 	printf("%d\n", root->num);
-	qtravel(root->lc);
-	qtravel(root->rc);
+	pretravel(root->lc);
+	pretravel(root->rc);
 }
 
-void ztravel(ptree root)
+void intravel(ptree root)
 {
 	if(root == NULL)
 		return;
-	ztravel(root->lc);
+	intravel(root->lc);
 	printf("%d\n", root->num);
-	ztravel(root->rc);
+	intravel(root->rc);
 }
 
-void htravel(ptree root)
+void posttravel(ptree root)
 {
 	if(root == NULL)
 		return;
-	htravel(root->lc);
-	htravel(root->rc);
+	posttravel(root->lc);
+	posttravel(root->rc);
 	printf("%d\n", root->num);
 }
 
@@ -81,11 +81,11 @@ int main()
 {
 //	ptree root;
 //	root = create();
-//	qtravel(root);
+//	pretravel(root);
 //	printf("\n");
-//	ztravel(root);
+//	intravel(root);
 //	printf("\n");
-//	htravel(root);
+//	posttravel(root);
 //	printf("\n");
 //	printf("%d %d %d\n", leafnum(root), nodenum(root), depth(root));
 	return 0;
