@@ -10,6 +10,11 @@ void init(int n)
 {
 	max = n;
 	stack = (int *)malloc(max * sizeof(int));
+	if(stack == NULL)
+	{
+		printf("Memory allocation failed!\n");
+		exit(1);
+	}
 }
 
 int full()

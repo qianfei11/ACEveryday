@@ -17,6 +17,11 @@ ptree create()
 	else
 	{
 		root = (ptree)malloc(sizeof(tree));
+		if(root == NULL)
+		{
+			printf("Memory allocation failed!\n");
+			exit(1);
+		}
 		root->num = n;
 		root->lc = create();
 		root->rc = create();

@@ -1,40 +1,39 @@
 #include<stdio.h>
 #include<stdlib.h>
-//#define TEST
 
-typedef struct member
+typedef struct node
 {
 	int val;
-	struct member *next;
+	struct node *next;
 }list, *plist;
 
-plist create()
+plist create()//建立链表 
 {
-	plist head, p, q;
-	int n;
-	head = p = (plist)malloc(sizeof(list));
-	while(scanf("%d", &n), n)
+	plist head, tail, p;
+	int n, num;
+	head = tail = NULL;
+	scanf("%d", &n);//要输入的数据个数 
+	while(n--)
 	{
-		p->val = n;
-		q = p;
+		scanf("%d", &num);
 		p = (plist)malloc(sizeof(list));
-		q->next = p;
+		if(p == NULL)
+		{
+			printf("Memory allocation failed!\n");
+			exit(1);
+		}
+		p->val = num;
+		p->next = NULL;
+		if(head == NULL)
+			head = p;
+		else
+			tail->next = p;
+		tail = p;
 	}
-//	scanf("%d", &p->val);
-//	while(p->val)
-//	{
-//		q = p;
-//		p = (plist)malloc(sizeof(list));
-//		scanf("%d", &p->val);
-//		q->next = p;
-//	}
-	free(p);
-	q->next = NULL;
-	printf("Create a list successfully!\n\n");
 	return head;
 }
 
-int length(plist head)
+int length(plist head)//返回元素长度 
 {
 	plist p;
 	int num = 0;
@@ -43,7 +42,7 @@ int length(plist head)
 	return num;
 }
 
-int locate(plist head, int num)
+int locate(plist head, int num)//定位元素 
 {
 	plist p;
 	int k = 0;
@@ -60,7 +59,7 @@ int locate(plist head, int num)
 	return 0;
 }
 
-int get(plist head, int pos)
+int get(plist head, int pos)//查找元素 
 {
 	if(pos < 0 || pos >= length(head))
 	{
@@ -68,13 +67,13 @@ int get(plist head, int pos)
 		return 0;
 	}
 	plist p = head;
-	for(int i = 0; i <= pos; i++)
+	for(int i = 0; i < pos; i++)
 		p = p->next;
 	printf("Find %d at pos %d!\n\n", p->val, pos);
 	return 1;
 }
 
-int quit(plist head, int pos)
+int del(plist head, int pos)//删除元素 
 {
 	if(pos < 0 || pos >= length(head))
 	{
@@ -96,7 +95,7 @@ int quit(plist head, int pos)
 	return 1;
 }
 
-int insert(plist head, int pos, int n)
+int ins(plist head, int pos, int n)//插入元素 
 {
 	if(pos < 0 || pos > length(head))
 	{
@@ -119,7 +118,7 @@ int insert(plist head, int pos, int n)
 	return 1;
 }
 
-void inserthead(plist head, int n)
+void inshead(plist head, int n)//在链表头部插入元素 
 {
 	plist p = head->next;
 	plist tmp = (plist)malloc(sizeof(list));
@@ -129,7 +128,7 @@ void inserthead(plist head, int n)
 	printf("Insert %d after head successfully!\n\n", n);
 }
 
-void inserttail(plist head, int n)
+void instail(plist head, int n)//在链表尾部插入元素 
 {
 	plist p = head;
 	while(p->next != NULL)
@@ -141,7 +140,22 @@ void inserttail(plist head, int n)
 	printf("Insert %d after tail successfully\n\n", n);
 }
 
-void destroy(plist head)
+plist inverse(plist head)//单链表的逆序
+{
+	plist mid, tail, lead;
+	tail = mid = NULL;
+	lead = head;
+	while(lead)
+	{
+		mid = lead;
+		lead = lead->next;
+		mid->next = tail;
+		tail = mid;
+	}
+	return mid;
+}
+
+void destroy(plist head)//销毁链表 
 {
 	plist p = head->next, tmp;
 	head->next = NULL;
@@ -154,24 +168,25 @@ void destroy(plist head)
 	printf("Kill the list successfully!\n\n");
 }
 
-void print(plist head)
+void print(plist head)//遍历链表 
 {
-	plist p;
-	for(p = head; p != NULL; p = p->next)
-		printf("%d\n", p->val);
+	plist p = head;
+	while(p)
+	{
+		printf("%d ", p->val);
+		p = p->next;
+	}
 	printf("\n");
 }
 
 int main()
 {
-//	#ifdef TEST
-//	freopen("D:\\in.txt", "r", stdin);
-//	freopen("D:\\out.txt", "w", stdout);
-//	#endif
-//	
 //	plist head;
 //	head = create();
 //	printf("length = %d\n\n", length(head));
+//	print(head);
+//	
+//	head = inverse(head);
 //	print(head);
 //	
 //	locate(head, 1);
@@ -179,32 +194,29 @@ int main()
 //	get(head, 2);
 //	get(head, 10);
 //	
-//	insert(head, 4, 100);
+//	ins(head, 4, 100);
 //	printf("length = %d\n\n", length(head));
 //	print(head);
 //	
-//	insert(head, 1, 66);
+//	ins(head, 1, 66);
 //	printf("length = %d\n\n", length(head));
 //	print(head);
 //	
-//	inserthead(head, 30);
+//	inshead(head, 30);
 //	printf("length = %d\n\n", length(head));
 //	print(head);
 //	
-//	inserttail(head, 20);
+//	instail(head, 20);
 //	printf("length = %d\n\n", length(head));
 //	print(head);
 //	
-//	quit(head, 2);
-//	quit(head, 10);
+//	del(head, 2);
+//	del(head, 10);
 //	printf("length = %d\n\n", length(head));
 //	print(head);
 //	
 //	destroy(head);
 //	printf("length = %d\n\n", length(head));
 //	print(head);
-//	
-//	fclose(stdin);
-//	fclose(stdout);
 	return 0;
 }

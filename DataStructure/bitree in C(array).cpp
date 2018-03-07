@@ -8,6 +8,11 @@ void create(int n, int root)
 {
 	max = n;
 	tree = (int *)malloc(max * sizeof(int));
+	if(tree == NULL)
+	{
+		printf("Memory allocation failed!\n");
+		exit(1);
+	}
 	for(int i = 0; i < max; i++)
 		tree[i] = 0;
 	tree[0] = root;

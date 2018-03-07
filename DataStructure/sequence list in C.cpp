@@ -10,6 +10,11 @@ void init(int n)
 	length = 0;
 	max = n;
 	list = (int *)malloc(max * sizeof(int));
+	if(list == NULL)
+	{
+		printf("Memory allocation failed!\n");
+		exit(1);
+	}
 }
 
 int full()
