@@ -20,7 +20,7 @@ ptree create()
 		if(root == NULL)
 		{
 			printf("Memory allocation failed!\n");
-			exit(1);
+			exit(0);
 		}
 		root->num = n;
 		root->lc = create();

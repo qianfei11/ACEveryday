@@ -8,8 +8,8 @@ time = 0
 while True:
     try:
         guess = eval((input("Please enter a number between 1~1000:\n")))
-    except SyntaxError as e:
-        print("Please enter a number!\n")
+    except BaseException as e:
+        print("Catch an error:", e, "\nPlease enter a number!\n")
         continue
     time += 1
     if guess < num:

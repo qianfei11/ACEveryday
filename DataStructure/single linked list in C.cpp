@@ -20,7 +20,7 @@ plist create()//建立链表
 		if(p == NULL)
 		{
 			printf("Memory allocation failed!\n");
-			exit(1);
+			exit(0);
 		}
 		p->val = num;
 		p->next = NULL;
@@ -36,10 +36,10 @@ plist create()//建立链表
 int length(plist head)//返回元素长度 
 {
 	plist p;
-	int num = 0;
+	int len = 0;
 	for(p = head; p != NULL; p = p->next)
-		num++;
-	return num;
+		len++;
+	return len;
 }
 
 int locate(plist head, int num)//定位元素 
@@ -59,7 +59,7 @@ int locate(plist head, int num)//定位元素
 	return 0;
 }
 
-int get(plist head, int pos)//查找元素 
+int get(plist head, int pos)//查找元素              //pos从0开始 
 {
 	if(pos < 0 || pos >= length(head))
 	{
@@ -73,7 +73,7 @@ int get(plist head, int pos)//查找元素
 	return 1;
 }
 
-int del(plist head, int pos)//删除元素 
+int del(plist head, int pos, int *x)//删除元素 
 {
 	if(pos < 0 || pos >= length(head))
 	{
@@ -81,21 +81,20 @@ int del(plist head, int pos)//删除元素
 		return 0;
 	}
 	plist p = head, pre = NULL;
-	pos = pos - 1;
-	for(int i = 0; i <= pos; i++)
+	for(int i = 0; i < pos; i++)
 	{
 		pre = p;
 		p = p->next;
 	}
 	pre->next = p->next;
-	int x = p->val;
+	*x = p->val;
 	free(p);
-	printf("%d has been deleted at pos %d!\n\n", x, pos + 1);
+	printf("%d has been deleted at pos %d!\n\n", *x, pos);
 	p = NULL;
 	return 1;
 }
 
-int ins(plist head, int pos, int n)//插入元素 
+int ins(plist head, int pos, int n)//前插元素 
 {
 	if(pos < 0 || pos > length(head))
 	{
@@ -103,7 +102,7 @@ int ins(plist head, int pos, int n)//插入元素
 		return 0;
 	}
 	plist p = head;
-	for(int i = 0; i < pos; i++)
+	for(int i = 0; i < pos - 1; i++)
 		p = p->next;
 	if(p == NULL)
 	{
@@ -114,21 +113,21 @@ int ins(plist head, int pos, int n)//插入元素
 	tmp->val = n;
 	tmp->next = p->next;
 	p->next = tmp;
-	printf("Insert %d successfully after pos %d!\n\n", n, pos);
+	printf("Insert %d successfully before pos %d!\n\n", n, pos);
 	return 1;
 }
 
-void inshead(plist head, int n)//在链表头部插入元素 
+void inshead(plist head, int n)//在表头插入元素 
 {
 	plist p = head->next;
 	plist tmp = (plist)malloc(sizeof(list));
 	tmp->val = n;
 	head->next = tmp;
 	tmp->next = p;
-	printf("Insert %d after head successfully!\n\n", n);
+	printf("Insert %d after the head successfully!\n\n", n);
 }
 
-void instail(plist head, int n)//在链表尾部插入元素 
+void instail(plist head, int n)//在表尾插入元素 
 {
 	plist p = head;
 	while(p->next != NULL)
@@ -137,22 +136,23 @@ void instail(plist head, int n)//在链表尾部插入元素
 	tmp->val = n;
 	p->next = tmp;
 	tmp->next = NULL;
-	printf("Insert %d after tail successfully\n\n", n);
+	printf("Insert %d after the tail successfully\n\n", n);
 }
 
 plist inverse(plist head)//单链表的逆序
 {
-	plist mid, tail, lead;
-	tail = mid = NULL;
-	lead = head;
-	while(lead)
+	plist t, q, p;
+	q = t = NULL;
+	p = head;
+	while(p != NULL)
 	{
-		mid = lead;
-		lead = lead->next;
-		mid->next = tail;
-		tail = mid;
+		t = p;
+		p = p->next;
+		t->next = q;
+		q = t;
 	}
-	return mid;
+	printf("Inverse the list successfully!\n\n");
+	return t;
 }
 
 void destroy(plist head)//销毁链表 
@@ -165,6 +165,7 @@ void destroy(plist head)//销毁链表
 		free(p);
 		p = tmp;
 	}
+	head->val = 0;
 	printf("Kill the list successfully!\n\n");
 }
 
@@ -181,42 +182,43 @@ void print(plist head)//遍历链表
 
 int main()
 {
-//	plist head;
-//	head = create();
-//	printf("length = %d\n\n", length(head));
-//	print(head);
-//	
-//	head = inverse(head);
-//	print(head);
-//	
-//	locate(head, 1);
-//	locate(head, 100);
-//	get(head, 2);
-//	get(head, 10);
-//	
-//	ins(head, 4, 100);
-//	printf("length = %d\n\n", length(head));
-//	print(head);
-//	
-//	ins(head, 1, 66);
-//	printf("length = %d\n\n", length(head));
-//	print(head);
-//	
-//	inshead(head, 30);
-//	printf("length = %d\n\n", length(head));
-//	print(head);
-//	
-//	instail(head, 20);
-//	printf("length = %d\n\n", length(head));
-//	print(head);
-//	
-//	del(head, 2);
-//	del(head, 10);
-//	printf("length = %d\n\n", length(head));
-//	print(head);
-//	
-//	destroy(head);
-//	printf("length = %d\n\n", length(head));
-//	print(head);
+	plist head;
+	head = create();
+	printf("length = %d\n\n", length(head));
+	print(head);
+	
+	locate(head, 1);
+	locate(head, 100);
+	get(head, 2);
+	get(head, 10);
+	
+	ins(head, 4, 100);
+	printf("length = %d\n\n", length(head));
+	print(head);
+	
+	ins(head, 1, 66);
+	printf("length = %d\n\n", length(head));
+	print(head);
+	
+	inshead(head, 30);
+	printf("length = %d\n\n", length(head));
+	print(head);
+	
+	instail(head, 20);
+	printf("length = %d\n\n", length(head));
+	print(head);
+	
+	int *x;
+	del(head, 2, x);
+	del(head, 10, x);
+	printf("length = %d\n\n", length(head));
+	print(head);
+		
+	head = inverse(head);
+	print(head);
+
+	destroy(head);
+	printf("length = %d\n\n", length(head));
+	print(head);
 	return 0;
 }

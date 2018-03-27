@@ -11,7 +11,7 @@ void create(int n, int root)
 	if(tree == NULL)
 	{
 		printf("Memory allocation failed!\n");
-		exit(1);
+		exit(0);
 	}
 	for(int i = 0; i < max; i++)
 		tree[i] = 0;

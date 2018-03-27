@@ -14,7 +14,7 @@ void init(int n)
 	if(q == NULL)
 	{
 		printf("Memory allocation failed!\n");
-		exit(1);
+		exit(0);
 	}
 }
 
