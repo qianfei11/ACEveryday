@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdlib.h>
 #define MAX 101
 
 typedef int elemtype;
@@ -11,12 +10,10 @@ typedef struct a{
 }triple;
 typedef struct b{
 	triple data[MAX];
-	int hang;
-	int lie;
-	int sum;
+	int hang, lie, sum;
 }matrix;
 
-int fasttransport(matrix m, matrix t)
+int fasttransport(matrix m, matrix &t)
 {
 	t.hang = m.lie;
 	t.lie = m.hang;
@@ -61,6 +58,5 @@ int main()
 	printf("The matrix after transport:\n");
 	for(int i = 1; i <= t.sum; i++)
 		printf("%d	%d	%d\n", t.data[i].row, t.data[i].col, t.data[i].val);
-	system("pause");
 	return 0;
 }
