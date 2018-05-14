@@ -31,7 +31,7 @@ unsigned char *base64_encode(const char *s, const int len)
             if(sign == 1)//因为只多出一个数据，故需要补两个'='
             {
                 res[j + 1] = ((s[i] & 0x03) << 4) & 0x3F;
-                res[j + 2] = 0x40;
+                res[j + 2] = 0x40;//0x40对应数字64，即为base64payload中下标为64的'='
                 res[j + 3] = 0x40;
             }
             else if(sign == 2)//因为多出两个数据，故需要补一个'='
@@ -63,13 +63,13 @@ unsigned char *base64_decode(const char *s, const int len)
     {
         int s_index = i * 4;
         int res_index = i * 3;
-        int buffer[4];
+        int buffer[4];//四个字节一组存入
         int sign = 0;
         for(j = 0; j < 4; j++)
             buffer[j] = find_pos(s[s_index + j]);
         if(i == count - 1)
             for(j = 0; j < 4; j++)
-                if(buffer[j] == 0x40)
+                if(buffer[j] == 0x40)//如果为'='，sign的值加一
                     sign++;
         res[res_index] = ((buffer[0] & 0x3F) << 2 | (buffer[1] & 0x30) >> 4);
         if(sign == 2)
