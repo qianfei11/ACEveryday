@@ -3,18 +3,18 @@
 #include<cstring>
 #include<cmath>
 #include<cctype>
-#define n 15 //Ò¶×ÓÊıÄ¿
-#define m 2 * n - 1 //Ê÷ÖĞ½áµã×ÜÊı
+#define n 15
+#define m 2 * n - 1
 
-typedef struct //½áµãÀàĞÍ
+typedef struct //Â½Ã¡ÂµÃ£Ã€Ã ÃÃ
 {
     float weight;
     int lchild, rchild, parent;
 }htnode;
-typedef htnode huffmantree[m]; //huffmantree ÊÇÏòÁ¿ÀàĞÍ
+typedef htnode huffmantree[m];
 typedef struct
 {
-    char bits[n + 1]; //´æ·Å±àÂëÎ»´®
+    char bits[n + 1];
 }codenode;
 typedef codenode huffmancode[n];
 
@@ -33,11 +33,7 @@ void inithuffmantree(huffmantree t)
 void inputweight(huffmantree t)
 {
     for(int i = 0; i < n; i++)
-    {
-//        printf("ÇëÊäÈëµÚ%d¸öÈ¨Öµ£º\n", i + 1);
-//        scanf("%f", &t[i].weight);
         t[i].weight = data[i];
-    }
 }
 
 void selectmin(huffmantree t, int i, int *p1, int *p2)
@@ -68,17 +64,16 @@ void selectmin(huffmantree t, int i, int *p1, int *p2)
 }
 
 void createhuffmantree(huffmantree t)
-{ //¹¹Ôìhuffman Ê÷£¬t[m-1]ÎªÆä¸ù½áµã
+{
     int p1, p2;
     inithuffmantree(t);
     inputweight(t);
-    for(int i = n; i < m; i++) //¹²½øĞĞn-1 ´ÎºÏ²¢£¬ĞÂ½áµãÒÀ´Î´æÓÚt[i]ÖĞ
+    for(int i = n; i < m; i++)
     {
         selectmin(t, i - 1, &p1, &p2);
-//ÔÚt[0..i-1]ÖĞÑ¡ÔñÁ½¸öÈ¨×îĞ¡µÄ¸ù½áµã£¬ÆäĞòºÅ·Ö±ğÎªp1 ºÍp2
         t[p1].parent = t[p2].parent = i;
-        t[i].lchild = p1; //×îĞ¡È¨µÄ¸ù½áµãÊÇĞÂ½áµãµÄ×óº¢×Ó
-        t[i].rchild = p2; //´ÎĞ¡È¨µÄ¸ù½áµãÊÇĞÂ½áµãµÄÓÒº¢×Ó
+        t[i].lchild = p1;
+        t[i].rchild = p2;
         t[i].weight = t[p1].weight + t[p2].weight;
     }
 }
@@ -86,22 +81,22 @@ void createhuffmantree(huffmantree t)
 void charsethuffmanencoding(huffmantree t,huffmancode h)
 {
     int c, p;
-    char cd[n + 1]; //ÁÙÊ±´æ·Å±àÂë
-    int start; //Ö¸Ê¾±àÂëÔÚcd ÖĞµÄÆğÊ¼Î»ÖÃ
-    cd[n] = '\0'; //±àÂë½áÊø·û
-    for(int i = 0; i < n; i++) //ÒÀ´ÎÇóÒ¶×Ót[i]µÄ±àÂë
+    char cd[n + 1];
+    int start;
+    cd[n] = '\0';
+    for(int i = 0; i < n; i++)
     {
-        start = n; //±àÂëÆğÊ¼Î»ÖÃµÄ³õÖµ
-        c = i; //´ÓÒ¶×Ót[i]¿ªÊ¼ÉÏËİ
-        while((p = t[c].parent) != NULL)//Ö±ÖÁÉÏËİµ½t[c]ÊÇÊ÷¸ùÎªÖ¹
-        { //Èôt[c]ÊÇt[p]µÄ×óº¢×Ó£¬ÔòÉú³É´úÂë0£»·ñÔòÉú³É´úÂë1
+        start = n;
+        c = i;
+        while((p = t[c].parent) != NULL)
+        {
             cd[--start] = (t[p].lchild == c) ? '0' : '1';
-            c = p; //¼ÌĞøÉÏËİ
+            c = p;
         }
-        strcpy(h[i].bits, &cd[start]); //¸´ÖÆ±àÂëÎ»´®
+        strcpy(h[i].bits, &cd[start]);
     }
     for(int i = 0; i < n; i++)
-        printf("µÚ%d¸öµ¥´Ê%sµÄ±àÂëÎª%s\n", i + 1, str[i], h[i].bits);
+        printf("The No.%d string %s can be compressed as %s\n", i + 1, str[i], h[i].bits);
 }
 
 int binary_to_ascii(char s[8])
@@ -144,8 +139,8 @@ int main()
                 strcat(data, h[i].bits);
 //                printf("%s\n", h[i].bits);
     }
-//    printf("%s\n", data);
-    printf("Ñ¹Ëõ½á¹û£º");
+    printf("%s\n", data);
+    printf("å‹ç¼©ç»“æœï¼š");
     for(int i = 0; i < strlen(data); i += 8)
     {
         char tmp[8];
@@ -160,6 +155,7 @@ int main()
     tmp = 0;
     char bin[200];
     char res[200];
+    printf("%s\n", data);
     while(tmp < strlen(data))
     {
         int k = 0, flag = 0, pos = 0;
@@ -183,6 +179,6 @@ int main()
         strcat(res, " ");
         tmp += k;
     }
-    printf("½âÑ¹Ëõ½á¹û£º%s\n", res);
+    printf("è§£å‹ç¼©ç»“æœï¼š%s\n", res);
     return 0;
 }
