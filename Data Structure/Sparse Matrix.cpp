@@ -17,7 +17,8 @@ typedef struct
 void buildsparsematrix(int m[ROWS][COLS], sparsematrix *psm)
 {
     int n = 0;
-    for(int i = 0; i < ROWS; ++i)
+    for(int i = 0; i < ROWS; ++i)    
+    {
         for(int j = 0; j < COLS; ++j)
         {
             if(m[i][j] != 0)
@@ -28,6 +29,7 @@ void buildsparsematrix(int m[ROWS][COLS], sparsematrix *psm)
                 ++n;
             }
         }
+    }
     psm->nrow = ROWS;
     psm->ncol = COLS;
     psm->num = n;
@@ -35,8 +37,7 @@ void buildsparsematrix(int m[ROWS][COLS], sparsematrix *psm)
 
 int get(sparsematrix *psm, int r, int c)
 {
-    int i = 0;
-    for( ; i < psm->num; i++)
+    for(int i = 0; i < psm->num; i++)
         if(psm->elem[i].r == r && psm->elem[i].c == c)
             return psm->elem[i].e;
     return 0;
@@ -63,15 +64,15 @@ void translate3(sparsematrix *pmata, sparsematrix *pmatb)
     for(int i = 0; i < COLS; i++)
         row_terms[i] = 0;
     for(int i = 0; i < pmata->num; i++)
-        row_terms[ pmata->elem[i].c - 1]++;
-    starting_pos[0]=0;
+        row_terms[pmata->elem[i].c - 1]++;
+    starting_pos[0] = 0; 
     for(int i = 1; i < pmata->ncol; i++)
-        starting_pos[i] = starting_pos[i - 1] + row_terms[i - 1] ;
+        starting_pos[i] = starting_pos[i - 1] + row_terms[i - 1];
     for(int i = 0; i < pmata->num; i++)
     {
-        pmatb->elem[starting_pos[pmata->elem[i].c - 1]].r = pmata->elem[i].c ;
-        pmatb->elem[starting_pos[pmata->elem[i].c - 1]].c = pmata->elem[i].r ;
-        pmatb->elem[starting_pos[pmata->elem[i].c - 1]].e = pmata->elem[i].e ;
+        pmatb->elem[starting_pos[pmata->elem[i].c - 1]].r = pmata->elem[i].c;
+        pmatb->elem[starting_pos[pmata->elem[i].c - 1]].c = pmata->elem[i].r;
+        pmatb->elem[starting_pos[pmata->elem[i].c - 1]].e = pmata->elem[i].e;
         starting_pos[pmata->elem[i].c - 1]++;
     }
 }
@@ -164,7 +165,7 @@ void mul(sparsematrix *pmata, sparsematrix *pmatb, sparsematrix *pmatc)
 
 int main()
 {
-    int i,j,x,y;
+    int i, j, x, y;
     int a[ROWS][COLS] = {{0,2,0,0,0,0,0},
                          {0,0,5,0,0,0,0},
                          {8,0,0,0,0,0,0},
