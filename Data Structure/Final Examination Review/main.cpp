@@ -34,7 +34,7 @@ void shellsort(int num[], int len)          //希尔排序
 
 void bubblesort(int num[], int len)        //冒泡排序
 {
-    for(int i = 0; i < len - 1; i++)
+    for(int i = 1; i < len; i++)
     {
         for(int j = 0; j < len - i; j++)
         {
