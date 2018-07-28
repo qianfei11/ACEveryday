@@ -55,7 +55,7 @@ int dequeue(queue *q, int &x)
 
 int main()
 {
-	queue point, bl;
+	queue point, time;
 	init(&point);
 	init(&time);
 	int n, sum = 0, tmp = 0, a, b;
