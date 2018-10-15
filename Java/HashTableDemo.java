@@ -55,11 +55,5 @@ public class HashTableDemo {
 		
 		map.clear();
 		System.out.println(map.isEmpty() ? "table is empty" : "table is not empty");
-		
-		System.out.println("--------------------");
-		
-		
-		System.out.println("--------------------");
-		
 	}
 }
