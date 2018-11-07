@@ -1,0 +1,11 @@
+x = 0:2*pi/200:2*pi;
+y1 = cos(0.5+3.*sin(x)./(1+x.^2));
+y2 = 0.2*exp(-0.5).*cos(2*x);
+y3 = exp(-0.8*x).*sin(5*x+1);
+figure;
+hold on;
+title('TASK-2');
+plot(x, y1, 'r-');
+plot(x, y2, 'b*');
+plot(x, y3, 'go');
+legend('cos(0.5+3.*sin(x)./(1+x.^2))', '0.2*exp(-0.5).*cos(2*x)', 'exp(-0.8*x).*sin(5*x+1)');
