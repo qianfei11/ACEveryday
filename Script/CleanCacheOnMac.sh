@@ -1,1 +1,0 @@
-qlmanage -r cache
