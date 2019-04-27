@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import struct
 
 with open('dakota-johnson-2.bmp', 'rb') as f_in, open('dakota-johnson-2-hidden.bmp', 'wb') as f_out:
